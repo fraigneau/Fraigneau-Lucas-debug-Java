@@ -3,14 +3,15 @@ package com.hemebiotech.analytics;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
-
+/**
+ * Write symptoms to a file
+ */
 public class WriteSymptomDataToFile implements ISymptomWriter {
 
     private String filepath;
-
     /**
-     * 
-     * @param fp of the file that must be opened for writing
+     * Set the filepath to write to
+     * @param fp Filepath to write to
      */
     public WriteSymptomDataToFile(String fp) {
         this.filepath = fp;
@@ -18,7 +19,8 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 
     @Override
     /**
-     * @param List sorts symptoms and their number of occurrences
+     * Write the symptoms to a file
+     * @param symptoms Map of symptoms sorted in alphabetical order
      */
     public void writeSymptoms(Map<String, Integer> symptoms) {
 
@@ -26,7 +28,7 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
             try {
                 FileWriter writer = new FileWriter(filepath);
                 for (Map.Entry<String, Integer> symptom : symptoms.entrySet()) {
-                    writer.write(symptom.getKey() + " = " + symptom.getValue() + "\n");
+                    writer.write(symptom.getKey() + ": " + symptom.getValue() + "\n");
                 }
                 writer.close();
             } catch (IOException e) {

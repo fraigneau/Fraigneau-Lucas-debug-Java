@@ -7,29 +7,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.io.FileNotFoundException;
-
+/**
+ * Read symptoms from a file
+ */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private String filepath;
-
 	/**
-	 * Setter 
-	 * @param fp a full or partial path to file with symptom strings in it, one per
-	 *           line
+	 * Set the filepath to read from
+	 * @param fp Filepath to read from
 	 */
 	public ReadSymptomDataFromFile(String fp) {
 		this.filepath = fp;
+		System.out.println("Filepath set to: " + fp); // Debugging statement
 	}
 
 	@Override
 	/**
-	 * @return List<String> list of symptoms
+	 * Read symptoms from a file
+	 * @return List of symptoms
+	 * @throws FileNotFoundException
+	 * @throws IOException
 	 */
-	public List<String> GetSymptoms() {
+	public List<String> getSymptoms() {
 		ArrayList<String> result = new ArrayList<String>();
+		System.out.println("GetSymptoms called"); // Debugging statement
 
 		if (filepath != null) {
 			try {
+				System.out.println("Attempting to read file: " + filepath); // Debugging statement
 				BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
 				String line = reader.readLine();
 
@@ -38,8 +44,9 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 					line = reader.readLine();
 				}
 				reader.close();
+				System.out.println("File read successfully"); // Debugging statement
 			} catch (FileNotFoundException e){
-				System.err.println("The specified file was not found.");
+				System.err.println("The specified file was not found."); // Debugging statement
 			} 
 			catch (IOException e) {
 				e.printStackTrace();

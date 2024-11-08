@@ -1,3 +1,6 @@
 *.txt
 *.out
 Infos.md
+.vscode
+doc
+Fiche_d'autoévaluation.pdf

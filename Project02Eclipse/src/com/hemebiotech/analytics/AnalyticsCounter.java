@@ -4,54 +4,45 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.TreeMap;
-
+/**
+ *
+ */
 public class AnalyticsCounter {
 
 	private ISymptomReader reader;
 	private ISymptomWriter writer;
 
-	/**
-	 * input and output filles
-	 * 
-	 * @param reader fp for input doc
-	 * @param writer fp for output doc
-	 */
 	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
 		this.writer = writer;
 	}
 
 	/**
+	 * Get symptoms from the reader
 	 * 
-	 * @return list of symptoms
+	 * @return List of symptoms
 	 */
 	public List<String> getSymptoms() {
-		return reader.GetSymptoms();
+		return reader.getSymptoms();
 	}
 
 	/**
-	 * Compiles all duplicates and notes the number of repetitions
+	 * Count the number of occurrences of each symptom
 	 * 
-	 * @param List<String>
-	 * @return Map<String, Integer>
+	 * @param symptoms List of symptoms
+	 * @return Map of symptoms with their occurrences
 	 */
 	public Map<String, Integer> countSymptoms(List<String> symptoms) {
 		Map<String, Integer> countMap = new HashMap<>();
-		for (String symptom : symptoms) {
-			if (countMap.containsKey(symptom)) {
-				countMap.put(symptom, countMap.get(symptom) + 1);
-			} else {
-				countMap.put(symptom, 1);
-			}
-		}
+		symptoms.forEach(symptom -> countMap.put(symptom, countMap.getOrDefault(symptom, 0) + 1));
 		return countMap;
 	}
 
 	/**
-	 * sort alphabetically by symptoms
+	 * Sort the symptoms in alphabetical order
 	 * 
-	 * @param Map<String, Integer>
-	 * @return Map<String, Integer>
+	 * @param symptoms Map of symptoms with their occurrences
+	 * @return Map of symptoms sorted in alphabetical order
 	 */
 	public Map<String, Integer> sortSymptoms(Map<String, Integer> symptoms) {
 		Map<String, Integer> sortMap = new TreeMap<>(symptoms);
@@ -59,9 +50,9 @@ public class AnalyticsCounter {
 	}
 
 	/**
-	 * manages writing to the output file
+	 * Write the symptoms to the writer
 	 * 
-	 * @param Map<String, Integer>
+	 * @param symptoms Map of symptoms sorted in alphabetical order
 	 */
 	public void writeSymptoms(Map<String, Integer> symptoms) {
 		writer.writeSymptoms(symptoms);
